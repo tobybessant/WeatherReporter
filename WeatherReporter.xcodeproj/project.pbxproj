@@ -12,6 +12,9 @@
 		D0627FA12060006D000D4261 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0627F9F2060006D000D4261 /* Main.storyboard */; };
 		D0627FA32060006D000D4261 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0627FA22060006D000D4261 /* Assets.xcassets */; };
 		D0627FA62060006D000D4261 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0627FA42060006D000D4261 /* LaunchScreen.storyboard */; };
+		D0627FAF20600091000D4261 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0627FAE20600091000D4261 /* MapKit.framework */; };
+		D0627FB4206009B0000D4261 /* AddReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0627FB3206009B0000D4261 /* AddReportViewController.swift */; };
+		D0627FB620600B65000D4261 /* WeatherReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0627FB520600B65000D4261 /* WeatherReport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		D0627FA22060006D000D4261 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0627FA52060006D000D4261 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0627FA72060006D000D4261 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0627FAE20600091000D4261 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D0627FB3206009B0000D4261 /* AddReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportViewController.swift; sourceTree = "<group>"; };
+		D0627FB520600B65000D4261 /* WeatherReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherReport.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0627FAF20600091000D4261 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +47,7 @@
 			children = (
 				D0627F9A2060006D000D4261 /* WeatherReporter */,
 				D0627F992060006D000D4261 /* Products */,
+				D0627FAD20600091000D4261 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +68,18 @@
 				D0627FA22060006D000D4261 /* Assets.xcassets */,
 				D0627FA42060006D000D4261 /* LaunchScreen.storyboard */,
 				D0627FA72060006D000D4261 /* Info.plist */,
+				D0627FB3206009B0000D4261 /* AddReportViewController.swift */,
+				D0627FB520600B65000D4261 /* WeatherReport.swift */,
 			);
 			path = WeatherReporter;
+			sourceTree = "<group>";
+		};
+		D0627FAD20600091000D4261 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0627FAE20600091000D4261 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +115,14 @@
 					D0627F972060006C000D4261 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -136,7 +162,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0627FB4206009B0000D4261 /* AddReportViewController.swift in Sources */,
 				D0627F9E2060006D000D4261 /* ViewController.swift in Sources */,
+				D0627FB620600B65000D4261 /* WeatherReport.swift in Sources */,
 				D0627F9C2060006D000D4261 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
