@@ -9,5 +9,5 @@
 import Foundation
 
 struct WeatherReport {
-    
+    var temp: Int
 }
