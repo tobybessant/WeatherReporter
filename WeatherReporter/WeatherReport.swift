@@ -9,5 +9,6 @@
 import Foundation
 
 struct WeatherReport {
-    var temp: Int
+    var temperature: Int
+    var description: String
 }

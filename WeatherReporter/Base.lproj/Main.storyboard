@@ -71,7 +71,11 @@
                                                 <segue destination="18g-tn-MXe" kind="unwind" unwindAction="unwindToMapWithSegue:" id="VkV-oU-sKA"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="8Qz-k0-bt6"/>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="8Qz-k0-bt6">
+                                            <connections>
+                                                <action selector="DoneButton:" destination="4mr-3W-KeU" id="gXh-Ve-t0F"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
