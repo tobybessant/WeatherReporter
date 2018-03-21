@@ -20,10 +20,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="iQp-Aa-itA"/>
                     </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="authSuccess" id="Uxf-Fr-Cvc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qMp-mw-xmz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-663" y="115"/>
+            <point key="canvasLocation" x="-623" y="115"/>
         </scene>
         <!--Weather Map Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -43,6 +46,11 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Weather Map" id="ceO-Wp-RPk">
+                                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="v7O-ZG-emC">
+                                            <connections>
+                                                <action selector="signOutButtonPressed:" destination="BYZ-38-t0r" id="z7i-9L-dHi"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Iws-hw-Vcm">
                                             <connections>
                                                 <segue destination="4mr-3W-KeU" kind="presentation" id="m6Z-jB-xSY"/>

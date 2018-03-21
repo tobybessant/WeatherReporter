@@ -25,5 +25,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
     }
 
+    @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+    }
 }
 
