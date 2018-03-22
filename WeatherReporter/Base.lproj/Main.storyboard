@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Weather Map Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherReporter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Weather Map Controller" id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherReporter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,6 +28,11 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Weather Map" id="ceO-Wp-RPk">
+                                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="v7O-ZG-emC">
+                                            <connections>
+                                                <action selector="signOutButtonPressed:" destination="BYZ-38-t0r" id="z7i-9L-dHi"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Iws-hw-Vcm">
                                             <connections>
                                                 <segue destination="4mr-3W-KeU" kind="presentation" id="m6Z-jB-xSY"/>
@@ -52,12 +57,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="118.29085457271366"/>
+            <point key="canvasLocation" x="121" y="115"/>
         </scene>
-        <!--Add Report View Controller-->
+        <!--Add Report Controller-->
         <scene sceneID="8yP-jQ-cxx">
             <objects>
-                <viewController id="4mr-3W-KeU" customClass="AddReportViewController" customModule="WeatherReporter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Report Controller" id="4mr-3W-KeU" customClass="AddReportViewController" customModule="WeatherReporter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DjM-ag-d00">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
