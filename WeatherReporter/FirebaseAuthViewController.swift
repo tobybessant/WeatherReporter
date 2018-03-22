@@ -45,6 +45,7 @@ class FirebaseAuthViewController: UIViewController, FUIAuthDelegate {
         super.viewDidAppear(animated)
         showLoginScreen()
     }
+    
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let err = error {
             print("Auth Error: \(err)")
