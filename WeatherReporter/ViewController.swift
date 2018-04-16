@@ -8,12 +8,16 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 
 class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
     
     var authUI: FUIAuth?
+    
+    @IBOutlet weak var map: MKMapView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
         let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
         
         self.authUI?.providers = providers
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

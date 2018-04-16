@@ -8,4 +8,5 @@ target 'WeatherReporter' do
   # Pods for WeatherReporter
 	pod 'Firebase/Core'
     pod 'FirebaseUI'
+    pod 'Firebase/Firestore'
 end
