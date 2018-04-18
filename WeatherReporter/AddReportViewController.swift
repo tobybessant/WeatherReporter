@@ -10,10 +10,7 @@ import UIKit
 
 class AddReportViewController: UIViewController {
     
-
-    let db = Firestore.firestore()
-    
-    var reportArray: [WeatherReport] = []
+    let dh = DataHandler()
     
     @IBOutlet weak var TemperatureTextInput: UITextField!
     @IBOutlet weak var DescriptionTextInput: UITextField!
@@ -40,28 +37,17 @@ class AddReportViewController: UIViewController {
      }
      */
     
-        @IBAction func DoneButton(_ sender: Any) {
-        //Collect input information and store them in arrays
-        // let tempTextInput = TemperatureTextInput.text ?? ""
-        //let descrpitionTextInput = DescriptionTextInput.text ?? ""
-
-        userInput()
-        sendToDatabase()
-            
+    @IBAction func DoneButton(_ sender: Any)
+    {
+        unwrapAndSendInput()
     }
-    //Gets input from the user and assigns the vaules into an Array
-    func userInput(){
-        
-        if let temp = TemperatureTextInput.text{                                                //Assigns a temp to the input from the text field
-            if let tempAsInt = Int(temp){                                                       //ensures that the temp veriable is of type Int
-                if let desc = DescriptionTextInput.text{                                        //Assings a desc to the input from a text field
-                    let wr = WeatherReport(temperature: tempAsInt, description: desc)           //Creates a new object from WeatherReport
-                    reportArray.append(wr)                                                      //Adds to the report array list
-                }
-            }
-        }
-        for wr in reportArray{                                                                  //Prints out each element of the report Array
-            print(wr)
+    
+    func unwrapAndSendInput()
+    {
+        if let temp = Int(TemperatureTextInput.text),
+            let desc = DescriptionTextInput.text
+        {
+            dh.sendData(temp: temp, desc: desc)
         }
     }
 }

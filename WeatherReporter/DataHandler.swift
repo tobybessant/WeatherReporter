@@ -20,8 +20,8 @@ public class DataHandler
         ref = db.collection("test").addDocument(data:
             [
                 "Date": generateDate(),
-                "Description": "sunny",
-                "Temperature":19,
+                "Description": desc,
+                "Temperature": temp,
                 ]) { err in
                     if let err = err {
                         print("Error adding document: \(err)")
