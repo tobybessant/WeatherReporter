@@ -44,7 +44,7 @@ class AddReportViewController: UIViewController {
     
     func unwrapAndSendInput()
     {
-        if let temp = Int(TemperatureTextInput.text),
+        if let tempString = TemperatureTextInput.text, let temp = Int(tempString),
             let desc = DescriptionTextInput.text
         {
             dh.sendData(temp: temp, desc: desc)
