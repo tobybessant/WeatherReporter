@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-
 
 class AddReportViewController: UIViewController {
     
@@ -64,27 +62,6 @@ class AddReportViewController: UIViewController {
         }
         for wr in reportArray{                                                                  //Prints out each element of the report Array
             print(wr)
-        }
-    }
-    
-    func sendToDatabase(){
-        
-        let date = Date()
-        let df = DateFormatter()
-        df.dateFormat = "dd.MM.yyyy"
-        
-        var ref: DocumentReference? = nil
-        ref = db.collection("test").addDocument(data:
-        [
-            "Date": df.string(from: date),
-            "Description": "sunny",
-            "Temperature":19,
-        ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
-            }
         }
     }
 }
