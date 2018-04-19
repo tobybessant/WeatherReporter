@@ -48,6 +48,7 @@ class AddReportViewController: UIViewController {
             let desc = DescriptionTextInput.text
         {
             dh.sendData(temp: temp, desc: desc)
+            dh.getAllDocuments()
             self.dismiss(animated: true, completion: nil)
         } else {
             alertView("ERROR", "Please enter valid data.")
