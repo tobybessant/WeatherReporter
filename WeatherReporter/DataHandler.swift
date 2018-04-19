@@ -28,7 +28,6 @@ public class DataHandler
                         
                     } else {
                         print("Document added with ID: \(ref!.documentID)")
-                        
                     }
         }
     }

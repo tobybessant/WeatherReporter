@@ -47,11 +47,8 @@ class AddReportViewController: UIViewController {
         if let tempString = TemperatureTextInput.text, let temp = Int(tempString),
             let desc = DescriptionTextInput.text
         {
-            if dh.sendData(temp: temp, desc: desc) {
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                alertView("ERROR", "Database submission failed.")
-            }
+            dh.sendData(temp: temp, desc: desc)
+            self.dismiss(animated: true, completion: nil)
         } else {
             alertView("ERROR", "Please enter valid data.")
         }
