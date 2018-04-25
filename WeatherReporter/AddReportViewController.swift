@@ -12,9 +12,12 @@ class AddReportViewController: UIViewController {
     
     let dh = DataHandler()
     
-    @IBOutlet weak var TemperatureTextInput: UITextField!
-    @IBOutlet weak var DescriptionTextInput: UITextField!
-
+    @IBOutlet weak var selectedTypeLabel: UILabel!
+    @IBOutlet weak var typePickerView: UIPickerView!
+    @IBOutlet weak var temperatureTextInput: UITextField!
+    @IBOutlet weak var windSpeedTextInput: UITextField!
+    @IBOutlet weak var windDirectionTextInput: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,13 +47,12 @@ class AddReportViewController: UIViewController {
     
     func unwrapAndSendInput()
     {
-        if let tempString = TemperatureTextInput.text, let temp = Int(tempString),
-            let desc = DescriptionTextInput.text
+        if let tempString = temperatureTextInput.text, let temp = Int(tempString)
         {
-            dh.sendData(temp: temp, desc: desc)
+            //dh.sendData(temp: temp, desc: desc)
             self.dismiss(animated: true, completion: nil)
         } else {
-            alertView("ERROR", "Please enter valid data.")
+            alertView("ERROR", "Please enter valid information.")
         }
         
     }

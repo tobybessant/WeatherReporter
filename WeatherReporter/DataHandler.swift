@@ -14,13 +14,15 @@ public class DataHandler
 {
     let db = Firestore.firestore()
     
-    func sendData(temp: Int, desc: String) //change to bool for validation
+    func sendData(conditions: String, temp: Int, windSpeed: String, windDirection: String)
     {
         var ref: DocumentReference? = nil
         ref = db.collection("WeatherSubmissions").addDocument(data:[
                 "Date": generateDate(),
                 "Time": generateTime(),
-                "Description": desc,
+                "Conditions": conditions,
+                "Wind Speed": windSpeed,
+                "Wind Direction": windDirection,
                 "Temperature": temp,
                 ]) { err in
                     if let err = err {
