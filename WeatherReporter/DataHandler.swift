@@ -33,6 +33,22 @@ public class DataHandler
                     }
         }
     }
+    func getAllDocuments()
+    {
+        db.collection("WeatherSubmissions").getDocuments() {(querySnapshot, err) in
+            if let err = err
+            {
+                print("Error Getting Documents: \(err)")
+            }else{
+                for document in querySnapshot!.documents
+                {
+                    print("\(document.documentID) => \(document.data())")
+                }
+            }
+            
+        }
+    }
+    
     
     func generateDate() -> String
     {
