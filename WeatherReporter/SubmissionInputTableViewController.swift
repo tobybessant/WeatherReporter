@@ -214,7 +214,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        guard segue.identifier == "doneUnwind" else { return }
+        guard segue.identifier == "saveUnwind" else { return }
         
         unwrapAndSendInput()
         
