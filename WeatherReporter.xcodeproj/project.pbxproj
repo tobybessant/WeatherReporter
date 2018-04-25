@@ -15,7 +15,6 @@
 		D0627FA32060006D000D4261 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0627FA22060006D000D4261 /* Assets.xcassets */; };
 		D0627FA62060006D000D4261 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0627FA42060006D000D4261 /* LaunchScreen.storyboard */; };
 		D0627FAF20600091000D4261 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0627FAE20600091000D4261 /* MapKit.framework */; };
-		D0627FB4206009B0000D4261 /* AddReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0627FB3206009B0000D4261 /* AddReportViewController.swift */; };
 		D06E59442062876B00D0AA30 /* FirebaseAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06E59432062876A00D0AA30 /* FirebaseAuthViewController.swift */; };
 		D09AC7AB2090C17C00C9871B /* SubmissionInputTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AC7AA2090C17C00C9871B /* SubmissionInputTableViewController.swift */; };
 		D471E419CC8B57D6202B0E55 /* Pods_WeatherReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE5E18B839708E7FB8CAAD6 /* Pods_WeatherReporter.framework */; };
@@ -35,7 +34,6 @@
 		D0627FA52060006D000D4261 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0627FA72060006D000D4261 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0627FAE20600091000D4261 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		D0627FB3206009B0000D4261 /* AddReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReportViewController.swift; sourceTree = "<group>"; };
 		D06E59432062876A00D0AA30 /* FirebaseAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthViewController.swift; sourceTree = "<group>"; };
 		D09AC7AA2090C17C00C9871B /* SubmissionInputTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionInputTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,7 +87,6 @@
 				D0627FA22060006D000D4261 /* Assets.xcassets */,
 				D0627FA42060006D000D4261 /* LaunchScreen.storyboard */,
 				D0627FA72060006D000D4261 /* Info.plist */,
-				D0627FB3206009B0000D4261 /* AddReportViewController.swift */,
 				D0520BAC20627E0B002513D1 /* GoogleService-Info.plist */,
 				D06E59432062876A00D0AA30 /* FirebaseAuthViewController.swift */,
 				1E923B83208782DF00F2F5C8 /* DataHandler.swift */,
@@ -295,7 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D09AC7AB2090C17C00C9871B /* SubmissionInputTableViewController.swift in Sources */,
-				D0627FB4206009B0000D4261 /* AddReportViewController.swift in Sources */,
 				D06E59442062876B00D0AA30 /* FirebaseAuthViewController.swift in Sources */,
 				D0627F9E2060006D000D4261 /* ViewController.swift in Sources */,
 				D0627F9C2060006D000D4261 /* AppDelegate.swift in Sources */,
