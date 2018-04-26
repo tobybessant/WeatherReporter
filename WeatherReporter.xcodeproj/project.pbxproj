@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		187709C32092508D00C710F4 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187709C22092508D00C710F4 /* MapAnnotation.swift */; };
 		1E923B84208782DF00F2F5C8 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E923B83208782DF00F2F5C8 /* DataHandler.swift */; };
 		D0520BAD20627E0B002513D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0520BAC20627E0B002513D1 /* GoogleService-Info.plist */; };
 		D0627F9C2060006D000D4261 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0627F9B2060006D000D4261 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		187709C22092508D00C710F4 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		1A4D59A61A30CE7A966EFD51 /* Pods-WeatherReporter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherReporter.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherReporter/Pods-WeatherReporter.release.xcconfig"; sourceTree = "<group>"; };
 		1E923B83208782DF00F2F5C8 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		71B369D46A67F08195B9762E /* Pods-WeatherReporter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherReporter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherReporter/Pods-WeatherReporter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				D06E59432062876A00D0AA30 /* FirebaseAuthViewController.swift */,
 				1E923B83208782DF00F2F5C8 /* DataHandler.swift */,
 				D09AC7AA2090C17C00C9871B /* SubmissionInputTableViewController.swift */,
+				187709C22092508D00C710F4 /* MapAnnotation.swift */,
 			);
 			path = WeatherReporter;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				D0627F9E2060006D000D4261 /* ViewController.swift in Sources */,
 				D0627F9C2060006D000D4261 /* AppDelegate.swift in Sources */,
 				1E923B84208782DF00F2F5C8 /* DataHandler.swift in Sources */,
+				187709C32092508D00C710F4 /* MapAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

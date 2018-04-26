@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SubmissionInputTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate {
+class SubmissionInputTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var conditionsTypeLabel: UILabel!
     @IBOutlet weak var conditionsPickerView: UIPickerView!
@@ -22,13 +22,13 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     
     let conditionsPickerViewCellIndexPath = IndexPath(row: 1, section: 0)
     
+    var location: CLLocationCoordinate2D?
+    
     var isConditionsPickerShown: Bool = false {
         didSet{
             conditionsPickerView.isHidden = !isConditionsPickerShown
         }
     }
-    
-    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +46,6 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self;
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,10 +53,6 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         // Dispose of any resources that can be recreated.
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    }
     
     let dh = DataHandler()
     
@@ -101,10 +90,14 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     
     func unwrapAndSendInput()
     {
-        if let conditions = conditionsTypeLabel.text, let tempString = temperatureTextInput.text, let temp = Int(tempString),
-            let windSpeed = windSpeedTextInput.text, let windDirection = windDirectionTextInput.text
+        if let conditions = conditionsTypeLabel.text,
+            let tempString = temperatureTextInput.text,
+            let temp = Int(tempString),
+            let windSpeed = windSpeedTextInput.text,
+            let windDirection = windDirectionTextInput.text,
+            let validLocation = location
         {
-            dh.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection)
+            dh.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
         } else {
             alertView("ERROR", "Please enter valid information.")
         }

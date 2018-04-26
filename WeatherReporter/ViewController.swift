@@ -12,12 +12,14 @@ import CoreLocation
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 
-class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLocationManagerDelegate {
     
     var authUI: FUIAuth?
     
     @IBOutlet weak var map: MKMapView!
-
+    
+    let locationManager = CLLocationManager()
+    var location: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,13 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
         let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
         
         self.authUI?.providers = providers
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self;
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
         
     }
     
@@ -49,6 +58,24 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
         
     }
     
+    func updateMapAnnotations() {
+        for mapAnnotation in MapAnnotation.mapAnnotationsArray {
+            let annotation = MKPointAnnotation()
+            
+            if let lat = Double(mapAnnotation.latitude), let lon = Double(mapAnnotation.longitude) {
+                annotation.coordinate = CLLocationCoordinate2D.init(latitude: lat, longitude: lon)
+            }
+            
+            annotation.title = mapAnnotation.conditions
+            annotation.subtitle = String(mapAnnotation.temperature)
+        }
+    }
+    
+    func createAnnotations(date: String, time: String, conditions: String, windSpeed: String, windDirection: String, temperature: Int, longitude: String, latitude: String) {
+        
+        
+    }
+    
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let err = error {
             print("Auth Error: \(err)")
@@ -58,15 +85,43 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        manager.stopUpdatingLocation()
+        
+        let coordinations = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude,longitude: userLocation.coordinate.longitude)
+        let span = MKCoordinateSpanMake(0.2,0.2)
+        let region = MKCoordinateRegion(center: coordinations, span: span)
+        
+        location = coordinations
+        map.setRegion(region, animated: true)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+  
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addSubmissionSegue" {
+            
+            if let navigationVC = segue.destination as? UINavigationController, let submissionVC = navigationVC.topViewController as? SubmissionInputTableViewController, let validLocation = self.location {
+                submissionVC.location = validLocation
+            }
+            
+            
+        }
+    }
+
     @IBAction func unwindToMap(segue: UIStoryboardSegue) {
         
     }
-
+    
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
         do {
             try self.authUI?.signOut()
