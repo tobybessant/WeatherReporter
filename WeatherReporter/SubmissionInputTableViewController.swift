@@ -54,7 +54,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     }
 
     
-    let dh = DataHandler()
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -88,8 +88,9 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         }
     }
     
-    func unwrapAndSendInput()
-    {
+    func unwrapAndSendInput() {
+        let dh = DataHandler()
+        
         if let conditions = conditionsTypeLabel.text,
             let tempString = temperatureTextInput.text,
             let temp = Int(tempString),

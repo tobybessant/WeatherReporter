@@ -11,6 +11,7 @@ import MapKit
 import CoreLocation
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
+import Firebase
 
 class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLocationManagerDelegate {
     
@@ -38,6 +39,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             locationManager.startUpdatingLocation()
         }
         
+        getDatabaseData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,12 +70,42 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             
             annotation.title = mapAnnotation.conditions
             annotation.subtitle = String(mapAnnotation.temperature)
+            map.addAnnotation(annotation)
+            
         }
+        print("annotation update called")
     }
     
-    func createAnnotations(date: String, time: String, conditions: String, windSpeed: String, windDirection: String, temperature: Int, longitude: String, latitude: String) {
+    func getDatabaseData() {
+        print("getting data")
+        let db = Firestore.firestore()
         
-        
+        db.collection("WeatherSubmissions").getDocuments() {(querySnapshot, err) in
+            if let err = err
+            {
+                print("Error Getting Documents: \(err)")
+                
+            } else {
+                for document in querySnapshot!.documents
+                {
+                    print("document: \(document.documentID)")
+                    if let date:String = document.get("Date") as? String,
+                        let time = document.get("Time") as? String,
+                        let conditions = document.get("Conditions") as? String,
+                        let windSpeed = document.get("Wind Speed") as? String,
+                        let windDirection = document.get("Wind Direction") as? String,
+                        let temperature = document.get("Temperature") as? Int,
+                        let longitude = document.get("Longitude") as? String,
+                        let latitude = document.get("Latitude") as? String {
+                        
+                        let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                        
+                        MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
+                        
+                    }
+                }
+            }
+        }
     }
     
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {

@@ -14,13 +14,6 @@ import CoreLocation
 public class DataHandler
 {
     let db = Firestore.firestore()
-    let settings: FirestoreSettings
-    
-    init() {
-        settings = db.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
-    }
     
     func sendData(conditions: String, temp: Int, windSpeed: String, windDirection: String, location: CLLocationCoordinate2D)
     {
@@ -43,7 +36,8 @@ public class DataHandler
                     }
         }
     }
-    func getAllDocuments(closure: (_ date: String, _ time: String, _ conditions: String, _ windSpeed: String, _ windDirection: String, _ temperature: Int, _ longitude: String, _ latitude: String) -> Void)
+    
+    func getAllDocuments()
     {
         db.collection("WeatherSubmissions").getDocuments() {(querySnapshot, err) in
             if let err = err
@@ -53,7 +47,21 @@ public class DataHandler
             } else {
                 for document in querySnapshot!.documents
                 {
-                    print("\(document.documentID) => \(document.data())")
+                    if let date:String = document.get("Date") as? String,
+                        let time = document.get("Time") as? String,
+                        let conditions = document.get("Conditions") as? String,
+                        let windSpeed = document.get("Wind Speed") as? String,
+                        let windDirection = document.get("Wind Direction") as? String,
+                        let temperature = document.get("Temperature") as? Int,
+                        let longitude = document.get("Longitude") as? String,
+                        let latitude = document.get("Latitude") as? String {
+                        
+                        let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                        
+                        MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
+                    }
+                    
+                    
                 }
             }
             
