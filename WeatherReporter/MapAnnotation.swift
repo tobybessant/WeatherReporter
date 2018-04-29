@@ -36,7 +36,8 @@ class MapAnnotation: NSObject, MKAnnotation {
         self.latitude = latitude
         
         self.title = self.conditions
-        self.subtitle = "○ \(self.temperature)°C \n ○ \(self.date) at \(self.time) \n ○ \(self.windSpeed), \(self.windDirection)"
+        let str = "\(self.temperature)°C, \(self.date) at \(self.time), \(self.windSpeed), \(self.windDirection)"
+        self.subtitle = str
         self.coordinate = CLLocationCoordinate2DMake(self.longitude, self.latitude)
         
     }
