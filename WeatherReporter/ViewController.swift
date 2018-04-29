@@ -45,6 +45,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showLoginScreen()
+        
     }
     
     private func isUserSignedIn() -> Bool {
@@ -57,6 +58,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             let authViewController = authUI!.authViewController()
             self.present(authViewController, animated: true)
         }
+        updateMapAnnotations()
         
     }
     
@@ -64,9 +66,8 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         for mapAnnotation in MapAnnotation.mapAnnotationsArray {
             let annotation = MKPointAnnotation()
             
-            if let lat = Double(mapAnnotation.latitude), let lon = Double(mapAnnotation.longitude) {
-                annotation.coordinate = CLLocationCoordinate2D.init(latitude: lat, longitude: lon)
-            }
+            annotation.coordinate = CLLocationCoordinate2D.init(latitude: mapAnnotation.latitude, longitude: mapAnnotation.longitude)
+            
             
             annotation.title = mapAnnotation.conditions
             annotation.subtitle = String(mapAnnotation.temperature)
@@ -88,20 +89,23 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             } else {
                 for document in querySnapshot!.documents
                 {
-                    print("document: \(document.documentID)")
-                    if let date:String = document.get("Date") as? String,
+                    
+                    if let date = document.get("Date") as? String,
                         let time = document.get("Time") as? String,
                         let conditions = document.get("Conditions") as? String,
                         let windSpeed = document.get("Wind Speed") as? String,
                         let windDirection = document.get("Wind Direction") as? String,
                         let temperature = document.get("Temperature") as? Int,
-                        let longitude = document.get("Longitude") as? String,
-                        let latitude = document.get("Latitude") as? String {
+                        let longitude = document.get("Longitude") as? Double,
+                        let latitude = document.get("Latitude") as? Double
+                        {
                         
+                        print("valid document recieved: \(document.documentID)")
+                            
                         let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
-                        
+                        self.updateMapAnnotations()
                     }
                 }
             }

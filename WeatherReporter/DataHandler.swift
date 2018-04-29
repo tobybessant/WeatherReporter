@@ -53,12 +53,13 @@ public class DataHandler
                         let windSpeed = document.get("Wind Speed") as? String,
                         let windDirection = document.get("Wind Direction") as? String,
                         let temperature = document.get("Temperature") as? Int,
-                        let longitude = document.get("Longitude") as? String,
-                        let latitude = document.get("Latitude") as? String {
+                        let longitude = document.get("Longitude") as? Double,
+                        let latitude = document.get("Latitude") as? Double {
                         
                         let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
+                        
                     }
                     
                     

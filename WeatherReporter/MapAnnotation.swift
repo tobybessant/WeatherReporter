@@ -15,8 +15,8 @@ struct MapAnnotation {
     var windSpeed: String
     var windDirection: String
     var temperature: Int
-    var longitude: String
-    var latitude: String
+    var longitude: Double
+    var latitude: Double
     
     static var mapAnnotationsArray: [MapAnnotation] = []
     
