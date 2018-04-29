@@ -68,7 +68,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             
             
             annotation.title = mapAnnotation.conditions
-            annotation.subtitle = String(mapAnnotation.temperature)
+            annotation.subtitle = mapAnnotation.subtitle
             map.addAnnotation(annotation)
             
         }

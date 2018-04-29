@@ -21,7 +21,9 @@ class MapAnnotation: NSObject, MKAnnotation {
     var latitude: Double = 0.0
     
     var title: String?
-    var subtitle: String?
+    var subtitle: String? {
+        return "\(self.temperature)°C \n Wind: \(self.windSpeed), \(self.windDirection) \n \(self.date) at \(self.time)"
+    }
     var coordinate: CLLocationCoordinate2D
     
     init(date: String, time: String, conds: String, windSpd: String, windDir: String, temperature: Int, longitude: Double, latitude: Double) {
@@ -36,8 +38,6 @@ class MapAnnotation: NSObject, MKAnnotation {
         self.latitude = latitude
         
         self.title = self.conditions
-        let str = "\(self.temperature)°C, \(self.date) at \(self.time), \(self.windSpeed), \(self.windDirection)"
-        self.subtitle = str
         self.coordinate = CLLocationCoordinate2DMake(self.longitude, self.latitude)
         
     }
