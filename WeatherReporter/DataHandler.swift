@@ -15,6 +15,8 @@ public class DataHandler
 {
     let db = Firestore.firestore()
     
+    let mapView = ViewController()
+    
     func sendData(conditions: String, temp: Int, windSpeed: String, windDirection: String, location: CLLocationCoordinate2D)
     {
         var ref: DocumentReference? = nil
@@ -33,6 +35,7 @@ public class DataHandler
                         
                     } else {
                         print("Document added with ID: \(ref!.documentID)")
+                        self.mapView.updateMapAnnotations()
                     }
         }
     }
@@ -56,7 +59,7 @@ public class DataHandler
                         let longitude = document.get("Longitude") as? Double,
                         let latitude = document.get("Latitude") as? Double {
                         
-                        let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                        let newMapAnnotation = MapAnnotation(date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
                         

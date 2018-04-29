@@ -27,7 +27,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         // Do any additional setup after loading the view, typically from a nib.
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
-        
+        map.delegate = self
         let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
         
         self.authUI?.providers = providers
@@ -58,11 +58,9 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             let authViewController = authUI!.authViewController()
             self.present(authViewController, animated: true)
         }
-        updateMapAnnotations()
-        
     }
     
-    func updateMapAnnotations() {
+    public func updateMapAnnotations() {
         for mapAnnotation in MapAnnotation.mapAnnotationsArray {
             let annotation = MKPointAnnotation()
             
@@ -102,7 +100,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
                         
                         print("valid document recieved: \(document.documentID)")
                             
-                        let newMapAnnotation = MapAnnotation(date: date, time: time, conditions: conditions, windSpeed: windSpeed, windDirection: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                            let newMapAnnotation = MapAnnotation(date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
                         self.updateMapAnnotations()
@@ -136,6 +134,16 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnnotation")
+        annotationView.image = UIImage(named: "test_pin_icon")
+        annotationView.canShowCallout = true
+        return annotationView
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

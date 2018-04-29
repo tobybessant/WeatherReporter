@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 class SubmissionInputTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -99,6 +100,9 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             let validLocation = location
         {
             dh.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
+            
+            
+            
         } else {
             alertView("ERROR", "Please enter valid information.")
         }
@@ -121,7 +125,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         self.present(dialog, animated: false, completion: nil)
     }
     
-    func updateDoneButtonState(){
+    func updateDoneButtonState() {
         let temperature = temperatureTextInput.text ?? ""
         let windSpeed = windSpeedTextInput.text ?? ""
         let windDirection = windDirectionTextInput.text ?? ""
