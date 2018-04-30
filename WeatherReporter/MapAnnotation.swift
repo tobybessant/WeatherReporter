@@ -20,6 +20,8 @@ class MapAnnotation: NSObject, MKAnnotation {
     var longitude: Double = 0.0
     var latitude: Double = 0.0
     
+    var icon: UIImage?
+
     var title: String?
     var subtitle: String? {
         return "\(self.temperature)°C \n\(self.windSpeed)mph (\(self.windDirection)) \n\(self.date) at \(self.time)"
@@ -44,4 +46,15 @@ class MapAnnotation: NSObject, MKAnnotation {
     
     static var mapAnnotationsArray: [MapAnnotation] = []
     
+     func getIcon() -> UIImage {
+        switch conditions{
+        case "Sunny":
+            return UIImage(named: "sunny-icon")
+        case "Snowy":
+            return UIImage(named: "snowy-icon")
+        default:
+           return UIImage(named: "test_pin_icon")
+            
+        }
+    }
 }

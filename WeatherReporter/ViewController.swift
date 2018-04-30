@@ -145,7 +145,9 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         //annotationView.image = UIImage(named: "test_pin_icon")
         //annotationView.canShowCallout = true
         //return annotationView
+        
         let identifier = "MyPin"
+        //let mapAnnotation = annotation as! MapAnnotation
         
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
@@ -165,7 +167,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             }
             
             label1.numberOfLines = 0
-            annotationView!.detailCalloutAccessoryView = label1;
+            annotationView!.detailCalloutAccessoryView = label1
             
         } else {
             annotationView!.annotation = annotation
