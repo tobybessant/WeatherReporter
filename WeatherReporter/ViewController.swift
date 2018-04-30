@@ -66,9 +66,10 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             
             annotation.coordinate = CLLocationCoordinate2D.init(latitude: mapAnnotation.latitude, longitude: mapAnnotation.longitude)
             
-            
             annotation.title = mapAnnotation.conditions
             annotation.subtitle = mapAnnotation.subtitle
+            print(annotation)
+            
             map.addAnnotation(annotation)
             
         }
@@ -156,6 +157,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             
             if let navigationVC = segue.destination as? UINavigationController, let submissionVC = navigationVC.topViewController as? SubmissionInputTableViewController, let validLocation = self.location {
                 submissionVC.location = validLocation
+                submissionVC.mapView = self
             }
             
             

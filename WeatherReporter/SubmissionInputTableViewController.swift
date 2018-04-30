@@ -19,11 +19,13 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     @IBOutlet weak var windDirectionTextInput: UITextField!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
-    var conditions = ["Sunny","Rainy","Overcast"]
+    var conditions = ["Sunny","Rainy","Overcast", "Snowy"]
     
     let conditionsPickerViewCellIndexPath = IndexPath(row: 1, section: 0)
     
     var location: CLLocationCoordinate2D?
+    
+    var mapView: ViewController?
     
     var isConditionsPickerShown: Bool = false {
         didSet{
@@ -90,21 +92,23 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     }
     
     func unwrapAndSendInput() {
-        let dh = DataHandler()
+        var dh: DataHandler? = nil
+        
+        if let mv = mapView {
+            dh = DataHandler(vc: mv)
+        }
+        
         
         if let conditions = conditionsTypeLabel.text,
             let tempString = temperatureTextInput.text,
             let temp = Int(tempString),
             let windSpeed = windSpeedTextInput.text,
             let windDirection = windDirectionTextInput.text,
-            let validLocation = location
-        {
-            dh.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
+            let validLocation = location {
             
-            
-            
-        } else {
-            alertView("ERROR", "Please enter valid information.")
+            if let datahandler = dh {
+                datahandler.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
+            }
         }
         
     }

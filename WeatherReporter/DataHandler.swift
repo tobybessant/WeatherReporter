@@ -13,9 +13,13 @@ import CoreLocation
 
 public class DataHandler
 {
-    let db = Firestore.firestore()
+    var vc: ViewController
     
-    let mapView = ViewController()
+    init(vc: ViewController) {
+        self.vc = vc
+    }
+    
+    let db = Firestore.firestore()
     
     func sendData(conditions: String, temp: Int, windSpeed: String, windDirection: String, location: CLLocationCoordinate2D)
     {
@@ -32,10 +36,10 @@ public class DataHandler
                 ]) { err in
                     if let err = err {
                         print("Error adding document: \(err)")
-                        
                     } else {
                         print("Document added with ID: \(ref!.documentID)")
-                        self.mapView.updateMapAnnotations()
+                        self.vc.getDatabaseData()
+                        self.vc.updateMapAnnotations()
                     }
         }
     }
