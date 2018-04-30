@@ -22,7 +22,7 @@ class MapAnnotation: NSObject, MKAnnotation {
     
     var title: String?
     var subtitle: String? {
-        return "\(self.temperature)°C - \(self.windSpeed) winds (\(self.windDirection)) on \(self.date) at \(self.time)"
+        return "\(self.temperature)°C \n\(self.windSpeed)mph (\(self.windDirection)) \n\(self.date) at \(self.time)"
     }
     var coordinate: CLLocationCoordinate2D
     

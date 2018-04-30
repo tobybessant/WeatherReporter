@@ -136,15 +136,43 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
+        
+        //if annotation.isKind(of: MKUserLocation.self) {
+        //    return nil
+        //}
+        
+        //let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnnotation")
+        //annotationView.image = UIImage(named: "test_pin_icon")
+        //annotationView.canShowCallout = true
+        //return annotationView
+        let identifier = "MyPin"
+        
+        if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnnotation")
-        annotationView.image = UIImage(named: "test_pin_icon")
-        annotationView.canShowCallout = true
+        var annotationView: MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+        
+        if annotationView == nil {
+            
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            
+            let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
+            if let text = annotation.subtitle {
+                label1.text = text
+                label1.font = label1.font.withSize(15)
+            }
+            
+            label1.numberOfLines = 0
+            annotationView!.detailCalloutAccessoryView = label1;
+            
+        } else {
+            annotationView!.annotation = annotation
+        }
         return annotationView
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
