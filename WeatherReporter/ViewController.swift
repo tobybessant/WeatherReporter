@@ -20,6 +20,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     var authUI: FUIAuth?
     
     @IBOutlet weak var map: MKMapView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D?
@@ -119,8 +120,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
                 }
                 self.updateMapAnnotations()
             }
-            
-            
         }
     }
     
@@ -131,6 +130,18 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     func clearAnnotationsArray() {
         MapAnnotation.mapAnnotationsArray.removeAll()
     }
+    
+    func lockSndStartTimer() {
+        addButton.isEnabled = false
+        let mainQueue = DispatchQueue.main
+        let deadline = DispatchTime.now() + .seconds(10)
+        mainQueue.asyncAfter(deadline: deadline) {
+            print("ten seconds passed since data sent")
+            self.addButton.isEnabled = true
+        }
+    }
+    
+
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let err = error {
             print("Auth Error: \(err)")

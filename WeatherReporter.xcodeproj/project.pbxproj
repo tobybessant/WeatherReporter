@@ -23,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		187709C22092508D00C710F4 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		18CB9D84209B203B00849723 /* WeatherReporter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeatherReporter.entitlements; sourceTree = "<group>"; };
 		1A4D59A61A30CE7A966EFD51 /* Pods-WeatherReporter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherReporter.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherReporter/Pods-WeatherReporter.release.xcconfig"; sourceTree = "<group>"; };
 		1E923B83208782DF00F2F5C8 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		71B369D46A67F08195B9762E /* Pods-WeatherReporter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherReporter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherReporter/Pods-WeatherReporter.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		D0627F9A2060006D000D4261 /* WeatherReporter */ = {
 			isa = PBXGroup;
 			children = (
+				18CB9D84209B203B00849723 /* WeatherReporter.entitlements */,
 				D0627F9B2060006D000D4261 /* AppDelegate.swift */,
 				D0627F9D2060006D000D4261 /* ViewController.swift */,
 				D0627F9F2060006D000D4261 /* Main.storyboard */,
@@ -148,6 +150,9 @@
 								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -437,6 +442,7 @@
 			baseConfigurationReference = 71B369D46A67F08195B9762E /* Pods-WeatherReporter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WeatherReporter/WeatherReporter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SCQ722YZA2;
 				INFOPLIST_FILE = WeatherReporter/Info.plist;
@@ -453,6 +459,7 @@
 			baseConfigurationReference = 1A4D59A61A30CE7A966EFD51 /* Pods-WeatherReporter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WeatherReporter/WeatherReporter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SCQ722YZA2;
 				INFOPLIST_FILE = WeatherReporter/Info.plist;
