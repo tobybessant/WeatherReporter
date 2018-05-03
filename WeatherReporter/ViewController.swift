@@ -15,6 +15,8 @@ import Firebase
 
 class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLocationManagerDelegate {
     
+    var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    
     var authUI: FUIAuth?
     
     @IBOutlet weak var map: MKMapView!
@@ -25,6 +27,10 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let appDelegate = appDelegate {
+            appDelegate.viewController = self
+        }
+        
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         map.delegate = self
@@ -38,8 +44,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
         }
-        
-        getDatabaseData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,6 +54,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     
     private func isUserSignedIn() -> Bool {
         if Auth.auth().currentUser == nil {return false}
+        print("user is signed in")
         return true
     }
     
@@ -61,6 +66,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     }
     
     public func updateMapAnnotations() {
+        
         for mapAnnotation in MapAnnotation.mapAnnotationsArray {
             let annotation = MKPointAnnotation()
             
@@ -77,6 +83,10 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     }
     
     func getDatabaseData() {
+        
+        clearAnnotationsArray()
+        clearAnnotationsFromMap()
+        print("clearing data")
         print("getting data")
         let db = Firestore.firestore()
         
@@ -101,16 +111,26 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
                         
                         print("valid document recieved: \(document.documentID)")
                             
-                            let newMapAnnotation = MapAnnotation(date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                            
+                        let newMapAnnotation = MapAnnotation(id: document.documentID,date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
-                        self.updateMapAnnotations()
                     }
                 }
+                self.updateMapAnnotations()
             }
+            
+            
         }
     }
     
+    func clearAnnotationsFromMap() {
+        let allAnnotations = self.map.annotations
+        self.map.removeAnnotations(allAnnotations)
+    }
+    func clearAnnotationsArray() {
+        MapAnnotation.mapAnnotationsArray.removeAll()
+    }
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let err = error {
             print("Auth Error: \(err)")

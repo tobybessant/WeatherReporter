@@ -11,6 +11,8 @@ import MapKit
 
 class MapAnnotation: NSObject, MKAnnotation {
     
+    var id = ""
+    
     var date: String = ""
     var time: String = ""
     var conditions: String = ""
@@ -28,7 +30,7 @@ class MapAnnotation: NSObject, MKAnnotation {
     }
     var coordinate: CLLocationCoordinate2D
     
-    init(date: String, time: String, conds: String, windSpd: String, windDir: String, temperature: Int, longitude: Double, latitude: Double) {
+    init(id: String, date: String, time: String, conds: String, windSpd: String, windDir: String, temperature: Int, longitude: Double, latitude: Double) {
         
         self.date = date
         self.time = time
@@ -46,15 +48,10 @@ class MapAnnotation: NSObject, MKAnnotation {
     
     static var mapAnnotationsArray: [MapAnnotation] = []
     
-     func getIcon() -> UIImage {
-        switch conditions{
-        case "Sunny":
-            return UIImage(named: "sunny-icon")
-        case "Snowy":
-            return UIImage(named: "snowy-icon")
-        default:
-           return UIImage(named: "test_pin_icon")
-            
-        }
+     func getIcon() -> UIImage? {
+        guard let icon = UIImage(named: "test_pin_icon") else  { return nil }
+    
+        return icon
+        
     }
 }
