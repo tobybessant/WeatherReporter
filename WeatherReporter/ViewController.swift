@@ -25,12 +25,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D?
     
-    var buttonUnlockTimer = Timer()
-    var timerMinutes = 0
-    var timerSeconds = 10
-    
-    @IBOutlet weak var timerSecondsLabel: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -139,7 +133,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     
     func lockSndStartTimer() {
         addButton.isEnabled = false
-        //startTimer()
         let mainQueue = DispatchQueue.main
         let deadline = DispatchTime.now() + .seconds(10)
         mainQueue.asyncAfter(deadline: deadline) {
@@ -148,20 +141,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         }
     }
     
-    func startTimer() {
-        buttonUnlockTimer = Timer.scheduledTimer(timeInterval: 1, target:self, selector: Selector(("updateTimerLabel")), userInfo: nil, repeats: true)
-    }
-    
-    func resetTimer() {
-        buttonUnlockTimer.invalidate()
-        timerSecondsLabel.text = "ready"
-    }
-    
-    func updateTimerLabel() {
-        timerSeconds -= 1
-        timerSecondsLabel.text = String(timerSeconds)
-        
-    }
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let err = error {
             print("Auth Error: \(err)")
@@ -240,8 +219,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
                 submissionVC.location = validLocation
                 submissionVC.mapView = self
             }
-            
-            
         }
     }
 
