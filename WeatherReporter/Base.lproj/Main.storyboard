@@ -179,31 +179,44 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xkM-Ei-d59">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="zIx-Ok-ND8" detailTextLabel="jkN-nB-fee" style="IBUITableViewCellStyleValue1" id="jHq-TJ-Gbb">
                                         <rect key="frame" x="0.0" y="459.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xkM-Ei-d59" id="Nyu-PI-kSD">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jHq-TJ-Gbb" id="Y1x-Ja-eDt">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Direction" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EXd-pR-SuK">
-                                                    <rect key="frame" x="15" y="0.0" width="360" height="43.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="43.5" id="k48-sC-5W6"/>
-                                                    </constraints>
-                                                    <nil key="textColor"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Direction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zIx-Ok-ND8">
+                                                    <rect key="frame" x="16" y="12" width="69" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="textEditingChanged:" destination="s2v-tc-b1m" eventType="editingChanged" id="UCe-HZ-yeZ"/>
-                                                    </connections>
-                                                </textField>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Select Direction..." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jkN-nB-fee">
+                                                    <rect key="frame" x="223.5" y="12" width="135.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="160" id="VNK-Ep-56m">
+                                        <rect key="frame" x="0.0" y="503.5" width="375" height="160"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VNK-Ep-56m" id="sQc-pN-gEB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCf-2b-SjH" userLabel="Direction Picker">
+                                                    <rect key="frame" x="28" y="-28" width="320" height="216"/>
+                                                </pickerView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="EXd-pR-SuK" firstAttribute="top" secondItem="Nyu-PI-kSD" secondAttribute="top" id="0Q5-8w-3zf"/>
-                                                <constraint firstAttribute="trailing" secondItem="EXd-pR-SuK" secondAttribute="trailing" id="PZq-Fw-Avk"/>
-                                                <constraint firstAttribute="bottom" secondItem="EXd-pR-SuK" secondAttribute="bottom" id="UT6-2x-dl4"/>
-                                                <constraint firstItem="EXd-pR-SuK" firstAttribute="leading" secondItem="Nyu-PI-kSD" secondAttribute="leading" constant="15" id="bwG-hN-pH5"/>
+                                                <constraint firstItem="SCf-2b-SjH" firstAttribute="centerY" secondItem="sQc-pN-gEB" secondAttribute="centerY" id="dBm-Pk-Zud"/>
+                                                <constraint firstItem="SCf-2b-SjH" firstAttribute="centerX" secondItem="sQc-pN-gEB" secondAttribute="centerX" id="vwL-ep-wCB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -230,9 +243,10 @@
                     <connections>
                         <outlet property="conditionsPickerView" destination="Sea-lm-ebW" id="PNV-zz-aDg"/>
                         <outlet property="conditionsTypeLabel" destination="vdn-Ft-a8j" id="yeE-3M-7pC"/>
+                        <outlet property="directionLabel" destination="jkN-nB-fee" id="xV0-bf-ERL"/>
+                        <outlet property="directionPickerView" destination="SCf-2b-SjH" id="orS-Th-oVG"/>
                         <outlet property="doneButton" destination="5Sz-Qq-Srn" id="1Rm-Es-RDe"/>
                         <outlet property="temperatureTextInput" destination="HJC-O7-Up8" id="9eA-PW-iVc"/>
-                        <outlet property="windDirectionTextInput" destination="EXd-pR-SuK" id="88R-ai-WBt"/>
                         <outlet property="windSpeedTextInput" destination="MCc-YV-l1V" id="eee-VG-J0x"/>
                     </connections>
                 </tableViewController>

@@ -16,16 +16,25 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     @IBOutlet weak var conditionsPickerView: UIPickerView!
     @IBOutlet weak var temperatureTextInput: UITextField!
     @IBOutlet weak var windSpeedTextInput: UITextField!
-    @IBOutlet weak var windDirectionTextInput: UITextField!
+    @IBOutlet weak var directionLabel: UILabel!
+    @IBOutlet weak var directionPickerView: UIPickerView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
     var conditions = ["Sunny","Rainy","Overcast", "Snowy"]
-    
+    var directions = ["North","East","South","West"
+    ]
     let conditionsPickerViewCellIndexPath = IndexPath(row: 1, section: 0)
+    let directionsPickerViewCellIndexPath = IndexPath(row:2, section: 2)
     
     var location: CLLocationCoordinate2D?
     
     var mapView: ViewController?
+    
+    var isDirectionsPickerShown: Bool = false {
+        didSet {
+            directionPickerView.isHidden = !isDirectionsPickerShown
+        }
+    }
     
     var isConditionsPickerShown: Bool = false {
         didSet{
@@ -43,8 +52,14 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         updateDoneButtonState()
+        
+        conditionsPickerView.tag = 0
+        directionPickerView.tag = 1
+        
         conditionsPickerView.delegate = self
         conditionsPickerView.dataSource = self
+        directionPickerView.delegate = self
+        directionPickerView.dataSource = self
         
         tableView.beginUpdates()
         tableView.endUpdates()
@@ -75,9 +90,23 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         } else {
             isConditionsPickerShown = false
         }
+        
+        if (indexPath.section == directionsPickerViewCellIndexPath.section) && (indexPath.row == directionsPickerViewCellIndexPath.row - 1) {
+            
+            if isDirectionsPickerShown {
+                isDirectionsPickerShown = false
+            } else {
+                isDirectionsPickerShown = true
+            }
+            
+        } else {
+            isDirectionsPickerShown = false
+        }
+        
         tableView.beginUpdates()
         tableView.endUpdates()
     }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
         case (conditionsPickerViewCellIndexPath.section, conditionsPickerViewCellIndexPath.row):
@@ -86,9 +115,17 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             } else {
                 return 0
             }
+        case (directionsPickerViewCellIndexPath.section, directionsPickerViewCellIndexPath.row):
+            if isDirectionsPickerShown {
+                return 160.0
+            } else {
+                return 0
+            }
         default:
             return 44.0
         }
+        
+        
     }
     
     func unwrapAndSendInput() {
@@ -103,7 +140,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             let tempString = temperatureTextInput.text,
             let temp = Int(tempString),
             let windSpeed = windSpeedTextInput.text,
-            let windDirection = windDirectionTextInput.text,
+            let windDirection = directionLabel.text,
             let validLocation = location {
             
             if let datahandler = dh {
@@ -132,13 +169,17 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     func updateDoneButtonState() {
         let temperature = temperatureTextInput.text ?? ""
         let windSpeed = windSpeedTextInput.text ?? ""
-        let windDirection = windDirectionTextInput.text ?? ""
+        let windDirection = directionLabel.text ?? ""
         
-        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty && !windDirection.isEmpty && !(conditionsTypeLabel.text == "Select Type...")
+        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty && !windDirection.isEmpty && !(conditionsTypeLabel.text == "Select Type...") && (directionLabel.text == "Select Direction...")
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        conditionsTypeLabel.text = conditions[row]
+        if pickerView.tag == 0 {
+            conditionsTypeLabel.text = conditions[row]
+        } else if pickerView.tag == 1 {
+            directionLabel.text = directions[row]
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -146,11 +187,22 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return conditions.count
+        if pickerView.tag == 0 {
+            return conditions.count
+        } else if pickerView.tag == 1 {
+            return directions.count
+        }
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return conditions[row]
+        
+        if pickerView.tag == 0 {
+            return conditions[row]
+        } else if pickerView.tag == 1 {
+            return directions[row]
+        }
+        return ""
     }
     
     @IBAction func textEditingChanged(_ sender: UITextField) {
