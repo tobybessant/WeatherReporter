@@ -20,6 +20,9 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     @IBOutlet weak var directionPickerView: UIPickerView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
+    var selectedDirection = ""
+    var selectedCondition = ""
+    
     var conditions = ["Sunny","Rainy","Overcast", "Snowy"]
     var directions = ["North","East","South","West"
     ]
@@ -81,10 +84,17 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         
         if (indexPath.section == conditionsPickerViewCellIndexPath.section) && (indexPath.row == conditionsPickerViewCellIndexPath.row - 1) {
             
+            self.view.endEditing(true)
+            
             if isConditionsPickerShown {
                 isConditionsPickerShown = false
+                conditionsTypeLabel.textColor = .black
+                conditionsTypeLabel.text = selectedCondition
+                
             } else {
                 isConditionsPickerShown = true
+                conditionsTypeLabel.textColor = .blue
+                conditionsTypeLabel.text = "Done"
             }
            
         } else {
@@ -93,10 +103,17 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         
         if (indexPath.section == directionsPickerViewCellIndexPath.section) && (indexPath.row == directionsPickerViewCellIndexPath.row - 1) {
             
+            self.view.endEditing(true)
+            
             if isDirectionsPickerShown {
                 isDirectionsPickerShown = false
+                directionLabel.textColor = .black
+                directionLabel.text = selectedDirection
             } else {
                 isDirectionsPickerShown = true
+                directionLabel.textColor = .blue
+                directionLabel.text = "Done"
+                
             }
             
         } else {
@@ -178,10 +195,13 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 0 {
-            conditionsTypeLabel.text = conditions[row]
+            //conditionsTypeLabel.text = conditions[row]
+            selectedCondition = conditions[row]
         } else if pickerView.tag == 1 {
-            directionLabel.text = directions[row]
+            //directionLabel.text = directions[row]
+            selectedDirection = directions[row]
         }
+        updateDoneButtonState()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
