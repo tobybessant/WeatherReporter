@@ -129,6 +129,8 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     }
     
     func unwrapAndSendInput() {
+        print("USI")
+        
         var dh: DataHandler? = nil
         
         if let mv = mapView {
@@ -171,7 +173,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         let windSpeed = windSpeedTextInput.text ?? ""
         let windDirection = directionLabel.text ?? ""
         
-        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty && !windDirection.isEmpty && !(conditionsTypeLabel.text == "Select Type...") && (directionLabel.text == "Select Direction...")
+        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty && !windDirection.isEmpty && !(conditionsTypeLabel.text == "Select Type...") && !(directionLabel.text == "Select Direction...")
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
