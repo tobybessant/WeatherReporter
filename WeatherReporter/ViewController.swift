@@ -35,6 +35,7 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         map.delegate = self
+        map.showsUserLocation = false
         let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
         
         self.authUI?.providers = providers
@@ -167,41 +168,38 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        //if annotation.isKind(of: MKUserLocation.self) {
-        //    return nil
-        //}
-        
-        //let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "customAnnotation")
-        //annotationView.image = UIImage(named: "test_pin_icon")
-        //annotationView.canShowCallout = true
-        //return annotationView
-        
+        //identifier for the dequeReusableAnnotationView
         let identifier = "MyPin"
-        //let mapAnnotation = annotation as! MapAnnotation
         
+        //the remaining code is unecessary if the user tapped their own location
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
         
+        //reuse the annotations in the same way tables reuse cells
         var annotationView: MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
         
+        //check for valid label and initialise the annotation view (white bubble thing that appears)
         if annotationView == nil {
-            
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
             
+            //create the label and contents
             let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
             if let text = annotation.subtitle {
                 label1.text = text
                 label1.font = label1.font.withSize(15)
             }
             
-            label1.numberOfLines = 0
+            label1.numberOfLines = 0 //removes lines restriction, will adjust depending on the content
+            
+            //add label to annotation view
             annotationView!.detailCalloutAccessoryView = label1
             
         } else {
             annotationView!.annotation = annotation
         }
+        
         return annotationView
     }
     

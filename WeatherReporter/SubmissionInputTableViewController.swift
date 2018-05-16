@@ -94,7 +94,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             } else {
                 isConditionsPickerShown = true
                 conditionsTypeLabel.textColor = .blue
-                conditionsTypeLabel.text = "Done"
+                conditionsTypeLabel.text = "Select"
             }
            
         } else {
@@ -112,7 +112,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             } else {
                 isDirectionsPickerShown = true
                 directionLabel.textColor = .blue
-                directionLabel.text = "Done"
+                directionLabel.text = "Select"
                 
             }
             
