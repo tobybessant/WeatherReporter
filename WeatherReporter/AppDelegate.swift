@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import FirebaseAuthUI
+//import FirebaseAuthUI
 import UserNotifications
 
 @UIApplicationMain
@@ -21,19 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         FirebaseApp.configure()
-        registerForPushNotifications()
+        
+        //registerForPushNotifications()
+        
         return true
-    }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        
-        let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String?
-        
-        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
-            return true
-        }
-        
-        return false
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -53,11 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
         if let vc = viewController {
             vc.getDatabaseData()
             print("became active")
         }
-        
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

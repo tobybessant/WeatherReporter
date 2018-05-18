@@ -74,13 +74,9 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         // Dispose of any resources that can be recreated.
     }
 
-    
-    
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
-        print(indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         if (indexPath.section == conditionsPickerViewCellIndexPath.section) && (indexPath.row == conditionsPickerViewCellIndexPath.row - 1) {
             
@@ -113,9 +109,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
                 isDirectionsPickerShown = true
                 directionLabel.textColor = .blue
                 directionLabel.text = "Select"
-                
             }
-            
         } else {
             isDirectionsPickerShown = false
         }
@@ -141,19 +135,13 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         default:
             return 44.0
         }
-        
-        
     }
     
     func unwrapAndSendInput() {
-        print("USI")
-        
         var dh: DataHandler? = nil
-        
         if let mv = mapView {
             dh = DataHandler(vc: mv)
         }
-        
         
         if let conditions = conditionsTypeLabel.text,
             let tempString = temperatureTextInput.text,
@@ -190,7 +178,10 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         let windSpeed = windSpeedTextInput.text ?? ""
         let windDirection = directionLabel.text ?? ""
         
-        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty && !windDirection.isEmpty && !(conditionsTypeLabel.text == "Select Type...") && !(directionLabel.text == "Select Direction...")
+        doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty &&
+            !windDirection.isEmpty &&
+            !((conditionsTypeLabel.text == "Select Type...") || (conditionsTypeLabel.text == "Select")) &&
+            !((directionLabel.text == "Select Direction...") || (conditionsTypeLabel.text == "Select"))
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

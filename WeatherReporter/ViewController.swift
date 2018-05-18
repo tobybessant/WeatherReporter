@@ -9,15 +9,15 @@
 import UIKit
 import MapKit
 import CoreLocation
-import FirebaseAuthUI
-import FirebaseGoogleAuthUI
+//import FirebaseAuthUI
+//import FirebaseGoogleAuthUI
 import Firebase
 
-class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     
-    var authUI: FUIAuth?
+    //var authUI: FUIAuth?
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var addButton: UIBarButtonItem!
@@ -25,20 +25,20 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D?
     
+    var dh: DataHandler?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         if let appDelegate = appDelegate {
             appDelegate.viewController = self
         }
         
-        authUI = FUIAuth.defaultAuthUI()
-        authUI?.delegate = self
+        dh = DataHandler(vc: self)
+        
         map.delegate = self
         map.showsUserLocation = false
-        let providers: [FUIAuthProvider] = [FUIGoogleAuth()]
-        
-        self.authUI?.providers = providers
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self;
@@ -50,25 +50,9 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showLoginScreen()
-        
     }
-    
-    private func isUserSignedIn() -> Bool {
-        if Auth.auth().currentUser == nil {return false}
-        print("user is signed in")
-        return true
-    }
-    
-    private func showLoginScreen() {
-        if !isUserSignedIn() {
-            let authViewController = authUI!.authViewController()
-            self.present(authViewController, animated: true)
-        }
-    }
-    
+
     public func updateMapAnnotations() {
-        
         for mapAnnotation in MapAnnotation.mapAnnotationsArray {
             let annotation = MKPointAnnotation()
             
@@ -80,54 +64,30 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
             
             map.addAnnotation(annotation)
             
+            print("annotation added")
         }
-        print("annotation update called")
     }
     
     func getDatabaseData() {
         
         clearAnnotationsArray()
         clearAnnotationsFromMap()
+        
         print("clearing data")
         print("getting data")
-        let db = Firestore.firestore()
         
-        db.collection("WeatherSubmissions").getDocuments() {(querySnapshot, err) in
-            if let err = err
-            {
-                print("Error Getting Documents: \(err)")
-                
-            } else {
-                for document in querySnapshot!.documents
-                {
-                    
-                    if let date = document.get("Date") as? String,
-                        let time = document.get("Time") as? String,
-                        let conditions = document.get("Conditions") as? String,
-                        let windSpeed = document.get("Wind Speed") as? String,
-                        let windDirection = document.get("Wind Direction") as? String,
-                        let temperature = document.get("Temperature") as? Int,
-                        let longitude = document.get("Longitude") as? Double,
-                        let latitude = document.get("Latitude") as? Double
-                        {
-                        
-                        print("valid document recieved: \(document.documentID)")
-                            
-                            
-                        let newMapAnnotation = MapAnnotation(id: document.documentID,date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
-                        
-                        MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
-                    }
-                }
-                self.updateMapAnnotations()
-            }
+        if let dh = self.dh {
+            dh.getAllDocuments()
+            print("docs got")
         }
+        
     }
     
     func clearAnnotationsFromMap() {
         let allAnnotations = self.map.annotations
         self.map.removeAnnotations(allAnnotations)
     }
+    
     func clearAnnotationsArray() {
         MapAnnotation.mapAnnotationsArray.removeAll()
     }
@@ -139,15 +99,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         mainQueue.asyncAfter(deadline: deadline) {
             print("ten seconds passed since data sent")
             self.addButton.isEnabled = true
-        }
-    }
-    
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        if let err = error {
-            print("Auth Error: \(err)")
-        } else {
-            print("Auth Success")
-            self.dismiss(animated: true)
         }
     }
     
@@ -208,8 +159,6 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         // Dispose of any resources that can be recreated.
     }
     
-  
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addSubmissionSegue" {
             
@@ -224,13 +173,13 @@ class ViewController: UIViewController, MKMapViewDelegate, FUIAuthDelegate, CLLo
         
     }
     
-    @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
-        do {
-            try self.authUI?.signOut()
-            showLoginScreen()
-        } catch {
-            print("Logout operation failed")
-        }
-    }
+    //@IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
+    //    do {
+    //        try self.authUI?.signOut()
+    //        showLoginScreen()
+    //    } catch {
+    //        print("Logout operation failed")
+    //    }
+    //}
 }
 

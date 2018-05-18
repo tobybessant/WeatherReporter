@@ -39,7 +39,7 @@ public class DataHandler
                     } else {
                         print("Document added with ID: \(ref!.documentID)")
                         self.vc.lockSndStartTimer()
-                        self.vc.getDatabaseData()
+                        self.vc.updateMapAnnotations()
                     }
         }
     }
@@ -63,13 +63,17 @@ public class DataHandler
                         let longitude = document.get("Longitude") as? Double,
                         let latitude = document.get("Latitude") as? Double {
                         
+                        print("valid document recieved: \(document.documentID)")
+                        
                         let newMapAnnotation = MapAnnotation(id: document.documentID, date: date, time: time, conds: conditions, windSpd: windSpeed, windDir: windDirection, temperature: temperature, longitude: longitude, latitude: latitude)
+                        
+                        print(newMapAnnotation)
                         
                         MapAnnotation.mapAnnotationsArray.append(newMapAnnotation)
                         
+                        self.vc.updateMapAnnotations()
+                        
                     }
-                    
-                    
                 }
             }
             
