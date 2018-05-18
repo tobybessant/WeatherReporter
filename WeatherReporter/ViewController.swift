@@ -95,7 +95,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     func lockSndStartTimer() {
         addButton.isEnabled = false
         let mainQueue = DispatchQueue.main
-        let deadline = DispatchTime.now() + .seconds(10)
+        let deadline = DispatchTime.now() + .seconds(30)
         mainQueue.asyncAfter(deadline: deadline) {
             print("ten seconds passed since data sent")
             self.addButton.isEnabled = true
