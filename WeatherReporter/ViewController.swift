@@ -45,6 +45,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
+            print("getting location")
         }
     }
     
@@ -70,8 +71,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     func getDatabaseData() {
         
-        clearAnnotationsArray()
         clearAnnotationsFromMap()
+        clearAnnotationsArray()
         
         print("clearing data")
         print("getting data")
@@ -92,7 +93,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         MapAnnotation.mapAnnotationsArray.removeAll()
     }
     
-    func lockSndStartTimer() {
+    func lockButtonAndStartTimer() {
         addButton.isEnabled = false
         let mainQueue = DispatchQueue.main
         let deadline = DispatchTime.now() + .seconds(30)
@@ -105,6 +106,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation:CLLocation = locations[0] as CLLocation
+        
+        print(userLocation)
         
         manager.stopUpdatingLocation()
         
@@ -162,9 +165,18 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addSubmissionSegue" {
             
-            if let navigationVC = segue.destination as? UINavigationController, let submissionVC = navigationVC.topViewController as? SubmissionInputTableViewController, let validLocation = self.location {
-                submissionVC.location = validLocation
-                submissionVC.mapView = self
+            if let navigationVC = segue.destination as? UINavigationController {
+                print("valid navVC")
+                if let submissionVC = navigationVC.topViewController as? SubmissionInputTableViewController {
+                    print("valid subVC")
+                    if let validLocation = self.location {
+                        submissionVC.location = validLocation
+                        submissionVC.mapView = self
+                        print("sent data")
+                    }
+                    print("invalid location")
+                }
+                
             }
         }
     }
@@ -172,14 +184,5 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     @IBAction func unwindToMap(segue: UIStoryboardSegue) {
         
     }
-    
-    //@IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
-    //    do {
-    //        try self.authUI?.signOut()
-    //        showLoginScreen()
-    //    } catch {
-    //        print("Logout operation failed")
-    //    }
-    //}
 }
 

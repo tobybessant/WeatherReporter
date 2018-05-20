@@ -38,8 +38,8 @@ public class DataHandler
                         print("Error adding document: \(err)")
                     } else {
                         print("Document added with ID: \(ref!.documentID)")
-                        self.vc.lockSndStartTimer()
-                        self.vc.updateMapAnnotations()
+                        self.vc.lockButtonAndStartTimer()
+                        self.vc.getDatabaseData()
                     }
         }
     }

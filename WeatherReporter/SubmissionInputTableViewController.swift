@@ -138,22 +138,27 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     }
     
     func unwrapAndSendInput() {
-        var dh: DataHandler? = nil
+        print("done pressed")
+        var dh: DataHandler?
         if let mv = mapView {
             dh = DataHandler(vc: mv)
-        }
-        
-        if let conditions = conditionsTypeLabel.text,
-            let tempString = temperatureTextInput.text,
-            let temp = Int(tempString),
-            let windSpeed = windSpeedTextInput.text,
-            let windDirection = directionLabel.text,
-            let validLocation = location {
+            print("valid vc")
             
-            if let datahandler = dh {
-                datahandler.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
+            if let conditions = conditionsTypeLabel.text,
+                let tempString = temperatureTextInput.text,
+                let temp = Int(tempString),
+                let windSpeed = windSpeedTextInput.text,
+                let windDirection = directionLabel.text,
+                let validLocation = location {
+                
+                if let datahandler = dh {
+                    datahandler.sendData(conditions: conditions, temp: temp, windSpeed: windSpeed, windDirection: windDirection, location: validLocation)
+                }
             }
         }
+        
+        
+        
         
     }
     
