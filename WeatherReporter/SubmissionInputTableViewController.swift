@@ -12,6 +12,7 @@ import MapKit
 
 class SubmissionInputTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    //outlets to labels
     @IBOutlet weak var conditionsTypeLabel: UILabel!
     @IBOutlet weak var conditionsPickerView: UIPickerView!
     @IBOutlet weak var temperatureTextInput: UITextField!
@@ -20,6 +21,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     @IBOutlet weak var directionPickerView: UIPickerView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
+    //
     var selectedDirection = ""
     var selectedCondition = ""
     
@@ -56,6 +58,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         
         updateDoneButtonState()
         
+        //tag pickerviews so they can be referenced later in code
         conditionsPickerView.tag = 0
         directionPickerView.tag = 1
         
@@ -74,13 +77,15 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         // Dispose of any resources that can be recreated.
     }
 
+    //code to update the picker view label text.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        //if the user taps the cell above the picker view cell, change text to read 'Select', otherwise change to read the users selection.
         if (indexPath.section == conditionsPickerViewCellIndexPath.section) && (indexPath.row == conditionsPickerViewCellIndexPath.row - 1) {
             
-            self.view.endEditing(true)
+            self.view.endEditing(true) //dismiss keyboard if its open from user editing previous field
             
             if isConditionsPickerShown {
                 isConditionsPickerShown = false
@@ -97,9 +102,10 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
             isConditionsPickerShown = false
         }
         
+        //if the user taps the cell above the picker view cell, change text to read 'Select', otherwise change to read the users selection.
         if (indexPath.section == directionsPickerViewCellIndexPath.section) && (indexPath.row == directionsPickerViewCellIndexPath.row - 1) {
             
-            self.view.endEditing(true)
+            self.view.endEditing(true) //dismiss keyboard if its open from user editing previous field
             
             if isDirectionsPickerShown {
                 isDirectionsPickerShown = false
@@ -118,6 +124,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         tableView.endUpdates()
     }
     
+    //code to manage the dynamic changing of pickerview cell height to give a show/hide effect.
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (indexPath.section, indexPath.row) {
         case (conditionsPickerViewCellIndexPath.section, conditionsPickerViewCellIndexPath.row):
@@ -137,12 +144,11 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         }
     }
     
+    //unwraps the users input as a final measure against sending invalid input, and uses the datahandler to send it to the database.
     func unwrapAndSendInput() {
-        print("done pressed")
         var dh: DataHandler?
         if let mv = mapView {
             dh = DataHandler(vc: mv)
-            print("valid vc")
             
             if let conditions = conditionsTypeLabel.text,
                 let tempString = temperatureTextInput.text,
@@ -178,6 +184,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         self.present(dialog, animated: false, completion: nil)
     }
     
+    //method is called whenever input fields are updated, or picker views are tapped. Checks the validity of inputs so it can enable the 'Done' button.
     func updateDoneButtonState() {
         let temperature = temperatureTextInput.text ?? ""
         let windSpeed = windSpeedTextInput.text ?? ""
@@ -185,25 +192,26 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         
         doneButton.isEnabled = !temperature.isEmpty && !windSpeed.isEmpty &&
             !windDirection.isEmpty &&
-            !((conditionsTypeLabel.text == "Select Type...") || (conditionsTypeLabel.text == "Select")) &&
-            !((directionLabel.text == "Select Direction...") || (conditionsTypeLabel.text == "Select"))
+            !((conditionsTypeLabel.text == "Select Type...") || (conditionsTypeLabel.text == "Select") || (conditionsTypeLabel.text == "")) &&
+            !((directionLabel.text == "Select Direction...") || (conditionsTypeLabel.text == "Select") || (directionLabel.text == ""))
     }
     
+    //update selected picker values to later update the picker view labels when the user has closed the picker views.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 0 {
-            //conditionsTypeLabel.text = conditions[row]
             selectedCondition = conditions[row]
         } else if pickerView.tag == 1 {
-            //directionLabel.text = directions[row]
             selectedDirection = directions[row]
         }
         updateDoneButtonState()
     }
     
+    //picker view setup: number of columns
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //picker view setup: number of rows/items
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 0 {
             return conditions.count
@@ -213,6 +221,7 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         return 1
     }
     
+    //picker view setup: name of each row/item
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if pickerView.tag == 0 {
@@ -223,10 +232,12 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         return ""
     }
     
+    //ibaction that is called whenever the text in a field is edited - both fields are connected to this aciton.
     @IBAction func textEditingChanged(_ sender: UITextField) {
         updateDoneButtonState()
     }
     
+    //if user taps done button (which will need to have been enabled by their valid input), unwind to the map, and send their inputted data.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         

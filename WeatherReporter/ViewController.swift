@@ -19,12 +19,15 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     //var authUI: FUIAuth?
     
+    //outlets to the mapview and '+' button
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    //variables for location management + storing
     let locationManager = CLLocationManager()
     var location: CLLocationCoordinate2D?
     
+    //datahandler object for firestore interactions
     var dh: DataHandler?
     
     override func viewDidLoad() {
@@ -35,17 +38,19 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             appDelegate.viewController = self
         }
         
+        //initialise datahandler, parsing this viewcontroller so that map functions can be used
         dh = DataHandler(vc: self)
         
+        //map delegates and settings
         map.delegate = self
         map.showsUserLocation = false
         
+        //start tracking users location
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self;
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
-            print("getting location")
         }
     }
     
@@ -53,6 +58,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         super.viewDidAppear(animated)
     }
 
+    //loop through MappAnnotation array and create annotation objects of them all - assigning title and subtitle values.
     public func updateMapAnnotations() {
         for mapAnnotation in MapAnnotation.mapAnnotationsArray {
             let annotation = MKPointAnnotation()
@@ -65,19 +71,17 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             
             map.addAnnotation(annotation)
             
-            print("annotation added")
         }
     }
     
+    //clear all info in MapAnnotation array and get all records from firestore via the DataHandler object.
     func getDatabaseData() {
         
-        clearAnnotationsFromMap()
-        clearAnnotationsArray()
-        
-        print("clearing data")
-        print("getting data")
+        clearAnnotationsFromMap() //clear map
+        clearAnnotationsArray() //clear array
         
         if let dh = self.dh {
+            //fetch all firebase records and update MapAnnotation array  + subsequently the map annotations
             dh.getAllDocuments()
             print("docs got")
         }
@@ -93,6 +97,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         MapAnnotation.mapAnnotationsArray.removeAll()
     }
     
+    //disable the '+' button for 30s after user has successfully submitted information, to prevent spam.
     func lockButtonAndStartTimer() {
         addButton.isEnabled = false
         let mainQueue = DispatchQueue.main
@@ -103,20 +108,20 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         }
     }
     
+    //delegate method called everytime the users location is updated.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let userLocation:CLLocation = locations[0] as CLLocation
+        let userLocation:CLLocation = locations[0] as CLLocation //get most recent location update
         
-        print(userLocation)
+        manager.stopUpdatingLocation() //stop updating to save resources
         
-        manager.stopUpdatingLocation()
-        
+        //break down information into components
         let coordinations = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude,longitude: userLocation.coordinate.longitude)
         let span = MKCoordinateSpanMake(0.2,0.2)
         let region = MKCoordinateRegion(center: coordinations, span: span)
         
-        location = coordinations
-        map.setRegion(region, animated: true)
+        location = coordinations //update variable with value
+        map.setRegion(region, animated: true) //make map zoom in on users location
         
     }
     
@@ -162,6 +167,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         // Dispose of any resources that can be recreated.
     }
     
+    //sends data from map view, as well as the viewcontroller itself.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addSubmissionSegue" {
             

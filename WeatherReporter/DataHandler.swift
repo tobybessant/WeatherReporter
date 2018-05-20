@@ -13,14 +13,17 @@ import CoreLocation
 
 public class DataHandler
 {
+    //viewcontroller reference so that update methods can be called in closures.
     var vc: ViewController
     
     init(vc: ViewController) {
         self.vc = vc
     }
     
+    //initialise a firestore to later be reassigned to specific collections
     let db = Firestore.firestore()
     
+    //sends data to the firestore collection titled "WeatherSubmissions"
     func sendData(conditions: String, temp: Int, windSpeed: String, windDirection: String, location: CLLocationCoordinate2D)
     {
         var ref: DocumentReference? = nil
@@ -44,6 +47,7 @@ public class DataHandler
         }
     }
     
+    //Fetch and unwrap all data from firestore by looping thorugh all records and creating new MapAnnotation objects with the data.
     func getAllDocuments()
     {
         db.collection("WeatherSubmissions").getDocuments() {(querySnapshot, err) in
@@ -80,6 +84,7 @@ public class DataHandler
         }
     }
     
+    //functions to generate the date and time on the fly so the user does not have to input it manually.
     func generateDate() -> String
     {
         let date = Date()
