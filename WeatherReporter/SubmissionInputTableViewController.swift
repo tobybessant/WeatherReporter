@@ -25,16 +25,18 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     var selectedDirection = ""
     var selectedCondition = ""
     
+    //picker view setup - 'enum' arrays and index paths to their cells for dynamic sizing
     var conditions = ["Sunny","Rainy","Overcast", "Snowy"]
-    var directions = ["North","East","South","West"
-    ]
+    var directions = ["North","East","South","West"]
     let conditionsPickerViewCellIndexPath = IndexPath(row: 1, section: 0)
     let directionsPickerViewCellIndexPath = IndexPath(row:2, section: 2)
     
+    //location and map refs parsed from prepare segue of ViewController
     var location: CLLocationCoordinate2D?
     
     var mapView: ViewController?
     
+    //computed properties to indicate the picker view being shown or hidden
     var isDirectionsPickerShown: Bool = false {
         didSet {
             directionPickerView.isHidden = !isDirectionsPickerShown
@@ -56,12 +58,14 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        //disable button until all inputs are valid.
         updateDoneButtonState()
         
         //tag pickerviews so they can be referenced later in code
         conditionsPickerView.tag = 0
         directionPickerView.tag = 1
         
+        //assign picker view delegates to this view controller.
         conditionsPickerView.delegate = self
         conditionsPickerView.dataSource = self
         directionPickerView.delegate = self
