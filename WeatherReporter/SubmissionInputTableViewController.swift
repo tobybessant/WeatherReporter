@@ -26,8 +26,9 @@ class SubmissionInputTableViewController: UITableViewController, UIPickerViewDel
     var selectedCondition = ""
     
     //picker view setup - 'enum' arrays and index paths to their cells for dynamic sizing
-    var conditions = ["Sunny","Rainy","Overcast", "Snowy"]
-    var directions = ["North","East","South","West"]
+    var conditions = ["☀️ Sunny", "☁️ Overcast", "💨 Windy", "☔️ Rainy", "⚡️ Thundery","❄️ Snowy" ]
+    var directions = ["↑ North","→ East","↓ South","→ West"]
+    
     let conditionsPickerViewCellIndexPath = IndexPath(row: 1, section: 0)
     let directionsPickerViewCellIndexPath = IndexPath(row:2, section: 2)
     
