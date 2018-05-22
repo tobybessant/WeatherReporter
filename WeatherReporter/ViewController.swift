@@ -44,13 +44,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         //map delegates and settings
         map.delegate = self
         map.showsUserLocation = false
-        
+        locationManager.requestWhenInUseAuthorization()
         //start tracking users location
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self;
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
+            map.userTrackingMode = .follow
         }
     }
     
